@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="! </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Tracker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+ --purple:#6a1b9a;
+ --purple-dark:#2b0a3d;
+ --black:#050505;
+ --green:#00ff9d;
+ --red:#ff4d4d;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+
+body{
+ background:linear-gradient(180deg,var(--purple-dark),var(--black));
+ color:#fff;
+ min-height:100vh;
+}
+
+header{
+ padding:20px;
+ text-align:center;
+ border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.tabs{
+ display:flex;
+ border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.tab{
+ flex:1;
+ text-align:center;
+ padding:12px;
+ cursor:pointer;
+ opacity:.6;
+}
+
+.tab.active{
+ opacity:1;
+ border-bottom:3px solid var(--green);
+}
+
+.section{padding:20px}
+.hidden{display:none}
+
+/* CARDS */
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:15px;
+ margin-bottom:20px;
+}
+
+.card{
+ background:#0f0f1a;
+ padding:15px;
+ border-radius:16px;
+}
+
+.card h3{font-size:.85rem;opacity:.7}
+.card span{font-size:1.2rem;font-weight:600}
+
+/* FORM */
+form input, form select{
+ width:100%;
+ padding:10px;
+ margin-bottom:10px;
+ border:none;
+ border-radius:10px;
+ background:#1c1c2b;
+ color:#fff;
+}
+
+form button{
+ width:100%;
+ padding:12px;
+ border:none;
+ border-radius:12px;
+ background:var(--green);
+ color:#000;
+ font-weight:700;
+ cursor:pointer;
+}
+
+/* TIMER */
+.timer{
+ text-align:center;
+ font-size:1.4rem;
+ margin:10px 0;
+}
+
+.timer button{
+ margin:5px;
+ padding:8px 12px;
+ border:none;
+ border-radius:10px;
+ background:#1c1c2b;
+ color:#fff;
+ cursor:pointer;
+}
+
+/* LOG */
+.log-item{
+ background:#0f0f1a;
+ padding:12px;
+ border-radius:12px;
+ margin-bottom:10px;
+ font-size:.85rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>📊 Capital Tracker</h1>
+</header>
+
+<div class="tabs">
+ <div class="tab active" onclick="openTab('home')">🏠 Inicio</div>
+ <div class="tab" onclick="openTab('sessions')">♠ Sesiones</div>
+ <div class="tab" onclick="openTab('chart')">📈 Gráfica</div>
+</div>
+
+<!-- HOME -->
+<div class="section" id="home">
+ <div class="cards">
+  <div class="card">
+   <h3>💵 Efectivo</h3>
+   <span id="cash">$0</span>
+  </div>
+  <div class="card">
+   <h3>₿ Cripto</h3>
+   <span id="crypto">$0</span>
+  </div>
+  <div class="card">
+   <h3>📈 Acciones</h3>
+   <span id="stocks">$0</span>
+  </div>
+ </div>
+
+ <div class="cards">
+  <div class="card">
+   <h3>Capital Total</h3>
+   <span id="totalCapital">$0</span>
+  </div>
+  <div class="card">
+   <h3>Profit Total</h3>
+   <span id="totalProfit">$0</span>
+  </div>
+ </div>
+</div>
+
+<!-- SESSIONS -->
+<div class="section hidden" id="sessions">
+
+ <div class="timer">
+  ⏱ <span id="time">00:00:00</span><br>
+  <button onclick="startTimer()">▶ Iniciar</button>
+  <button onclick="stopTimer()">⏹ Detener</button>
+ </div>
+
+ <form onsubmit="addSession(event)">
+  <input type="date" id="date" required>
+  <select id="type">
+   <option>Poker</option>
+   <option>Casino</option>
+   <option>Trading</option>
+  </select>
+  <input type="number" id="buyin" placeholder="Buy-in" required>
+  <input type="number" id="cashout" placeholder="Cash-out" required>
+  <input type="number" id="hours" placeholder="Horas" step="0.01" required>
+  <button>Registrar sesión</button>
+ </form>
+
+ <div id="sessionLog"></div>
+</div>
+
+<!-- CHART -->
+<div class="section hidden" id="chart">
+ <canvas id="lineChart"></canvas>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("tracker")) || {
+ sessions:[],
+ balance:[0],
+ assets:{cash:0,crypto:0,stocks:0}
+};
+
+function openTab(id){
+ document.querySelectorAll(".section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+ event.target.classList.add("active");
+}
+
+/* TIMER */
+let seconds=0, timer=null;
+
+function startTimer(){
+ if(timer) return;
+ timer=setInterval(()=>{
+  seconds++;
+  let h=String(Math.floor(seconds/3600)).padStart(2,'0');
+  let m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
+  let s=String(seconds%60).padStart(2,'0');
+  time.textContent=`${h}:${m}:${s}`;
+ },1000);
+}
+
+function stopTimer(){
+ clearInterval(timer);
+ timer=null;
+ hours.value=(seconds/3600).toFixed(2);
+}
+
+/* SESSION */
+function addSession(e){
+ e.preventDefault();
+ let buy=+buyin.value;
+ let out=+cashout.value;
+ let profit=out-buy;
+ let hrs=+hours.value;
+ let roi=((profit/buy)*100).toFixed(1);
+ let hourly=(profit/hrs).toFixed(0);
+
+ data.sessions.push({date:date.value,type:type.value,buy,out,profit,hrs,roi,hourly});
+ data.balance.push(data.balance.at(-1)+profit);
+
+ localStorage.setItem("tracker",JSON.stringify(data));
+ seconds=0; time.textContent="00:00:00";
+ renderAll();
+ e.target.reset();
+}
+
+function renderAll(){
+ renderHome();
+ renderSessions();
+ drawChart();
+}
+
+function renderHome(){
+ let profit=data.balance.at(-1);
+ let invested=data.sessions.reduce((a,s)=>a+s.buy,0);
+ totalCapital.textContent=`$${(invested+profit).toLocaleString()}`;
+ totalProfit.textContent=`$${profit.toLocaleString()}`;
+}
+
+function renderSessions(){
+ sessionLog.innerHTML="";
+ data.sessions.slice().reverse().forEach(s=>{
+  sessionLog.innerHTML+=`
+  <div class="log-item">
+   <b>${s.date}</b> · ${s.type}<br>
+   Buy $${s.buy} → Out $${s.out}<br>
+   Profit: <span style="color:${s.profit>=0?'#00ff9d':'#ff4d4d'}">
+   ${s.profit>=0?'+':''}${s.profit}</span><br>
+   ${s.roi}% · $${s.hourly}/h
+  </div>`;
+ });
+}
+
+let chart;
+function drawChart(){
+ if(chart) chart.destroy();
+ chart=new Chart(lineChart,{
+  type:'line',
+  data:{
+   labels:data.balance.map((_,i)=>i),
+   datasets:[{
+    data:data.balance,
+    borderColor:'#00ff9d',
+    fill:true,
+    backgroundColor:'rgba(0,255,157,.15)',
+    tension:.3
+   }]
+  },
+  options:{plugins:{legend:{display:false}}}
+ });
+}
+
+renderAll();
+</script>
+
+</body>
+</html>
