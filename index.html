@@ -1,307 +1,184 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-      <h1 class="! </h1>
-      <p id="currentTime"></p>
-      <script src="script.js"></script>
-  </body>
-</html><!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Capital Tracker</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-:root{
- --purple:#6a1b9a;
- --purple-dark:#2b0a3d;
- --black:#050505;
- --green:#00ff9d;
- --red:#ff4d4d;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-
-body{
- background:linear-gradient(180deg,var(--purple-dark),var(--black));
- color:#fff;
- min-height:100vh;
-}
-
-header{
- padding:20px;
- text-align:center;
- border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.tabs{
- display:flex;
- border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.tab{
- flex:1;
- text-align:center;
- padding:12px;
- cursor:pointer;
- opacity:.6;
-}
-
-.tab.active{
- opacity:1;
- border-bottom:3px solid var(--green);
-}
-
-.section{padding:20px}
-.hidden{display:none}
-
-/* CARDS */
-.cards{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
- gap:15px;
- margin-bottom:20px;
-}
-
-.card{
- background:#0f0f1a;
- padding:15px;
- border-radius:16px;
-}
-
-.card h3{font-size:.85rem;opacity:.7}
-.card span{font-size:1.2rem;font-weight:600}
-
-/* FORM */
-form input, form select{
- width:100%;
- padding:10px;
- margin-bottom:10px;
- border:none;
- border-radius:10px;
- background:#1c1c2b;
- color:#fff;
-}
-
-form button{
- width:100%;
- padding:12px;
- border:none;
- border-radius:12px;
- background:var(--green);
- color:#000;
- font-weight:700;
- cursor:pointer;
-}
-
-/* TIMER */
-.timer{
- text-align:center;
- font-size:1.4rem;
- margin:10px 0;
-}
-
-.timer button{
- margin:5px;
- padding:8px 12px;
- border:none;
- border-radius:10px;
- background:#1c1c2b;
- color:#fff;
- cursor:pointer;
-}
-
-/* LOG */
-.log-item{
- background:#0f0f1a;
- padding:12px;
- border-radius:12px;
- margin-bottom:10px;
- font-size:.85rem;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ángeles Studio · Diseño Gráfico</title>
+  <meta name="description" content="Tienda de diseño gráfico: logotipos, identidad de marca, packs para redes sociales, plantillas y pósters." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
-<header>
- <h1>📊 Capital Tracker</h1>
-</header>
+  <div class="announcement">✦ Envío digital inmediato · 10% de descuento con el código <b>CREA10</b> ✦</div>
 
-<div class="tabs">
- <div class="tab active" onclick="openTab('home')">🏠 Inicio</div>
- <div class="tab" onclick="openTab('sessions')">♠ Sesiones</div>
- <div class="tab" onclick="openTab('chart')">📈 Gráfica</div>
-</div>
+  <header class="site-header">
+    <a href="#" class="logo">ángeles<span>.studio</span></a>
+    <nav class="nav" id="nav">
+      <a href="#tienda">Tienda</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#portafolio">Portafolio</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" id="openCart" aria-label="Abrir carrito">
+        🛒 <span id="cartCount">0</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menú">☰</button>
+    </div>
+  </header>
 
-<!-- HOME -->
-<div class="section" id="home">
- <div class="cards">
-  <div class="card">
-   <h3>💵 Efectivo</h3>
-   <span id="cash">$0</span>
-  </div>
-  <div class="card">
-   <h3>₿ Cripto</h3>
-   <span id="crypto">$0</span>
-  </div>
-  <div class="card">
-   <h3>📈 Acciones</h3>
-   <span id="stocks">$0</span>
-  </div>
- </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Diseñadora gráfica · Branding · Ilustración</p>
+      <h1>Diseño que hace que tu marca <em>se recuerde</em>.</h1>
+      <p class="lead">Logotipos, identidades visuales, plantillas y piezas gráficas listas para hacer crecer tu negocio.</p>
+      <div class="hero-cta">
+        <a href="#tienda" class="btn btn-primary">Ver la tienda</a>
+        <a href="#contacto" class="btn btn-ghost">Pedir presupuesto</a>
+      </div>
+      <ul class="hero-stats">
+        <li><b>+150</b><span>marcas creadas</span></li>
+        <li><b>8 años</b><span>de experiencia</span></li>
+        <li><b>4.9 ★</b><span>valoración media</span></li>
+      </ul>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="shape s1"></div>
+      <div class="shape s2"></div>
+      <div class="shape s3"></div>
+      <div class="shape s4">Aa</div>
+    </div>
+  </section>
 
- <div class="cards">
-  <div class="card">
-   <h3>Capital Total</h3>
-   <span id="totalCapital">$0</span>
-  </div>
-  <div class="card">
-   <h3>Profit Total</h3>
-   <span id="totalProfit">$0</span>
-  </div>
- </div>
-</div>
+  <!-- TIENDA -->
+  <section class="section" id="tienda">
+    <div class="section-head">
+      <h2>Tienda</h2>
+      <p>Productos digitales y servicios con precio cerrado.</p>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-cat="todos">Todos</button>
+      <button class="filter" data-cat="branding">Branding</button>
+      <button class="filter" data-cat="redes">Redes sociales</button>
+      <button class="filter" data-cat="plantillas">Plantillas</button>
+      <button class="filter" data-cat="print">Print</button>
+    </div>
+    <div class="products" id="products"></div>
+  </section>
 
-<!-- SESSIONS -->
-<div class="section hidden" id="sessions">
+  <!-- SERVICIOS -->
+  <section class="section alt" id="servicios">
+    <div class="section-head">
+      <h2>Cómo trabajo</h2>
+      <p>Un proceso claro, de la idea al archivo final.</p>
+    </div>
+    <ol class="steps">
+      <li><span>01</span><h3>Briefing</h3><p>Conversamos sobre tu negocio, tu público y lo que quieres transmitir.</p></li>
+      <li><span>02</span><h3>Bocetos</h3><p>Te presento propuestas visuales con distintas direcciones creativas.</p></li>
+      <li><span>03</span><h3>Revisiones</h3><p>Ajustamos la propuesta elegida hasta que sea perfecta para ti.</p></li>
+      <li><span>04</span><h3>Entrega</h3><p>Recibes todos los archivos (AI, PDF, SVG, PNG) y guía de uso.</p></li>
+    </ol>
+  </section>
 
- <div class="timer">
-  ⏱ <span id="time">00:00:00</span><br>
-  <button onclick="startTimer()">▶ Iniciar</button>
-  <button onclick="stopTimer()">⏹ Detener</button>
- </div>
+  <!-- PORTAFOLIO -->
+  <section class="section" id="portafolio">
+    <div class="section-head">
+      <h2>Portafolio</h2>
+      <p>Algunos proyectos recientes.</p>
+    </div>
+    <div class="portfolio">
+      <figure class="work w1"><div class="work-art">Café<br>Lumbre</div><figcaption>Identidad · Cafetería</figcaption></figure>
+      <figure class="work w2"><div class="work-art">VERDE</div><figcaption>Packaging · Cosmética natural</figcaption></figure>
+      <figure class="work w3"><div class="work-art">Nº 7</div><figcaption>Póster · Festival de música</figcaption></figure>
+      <figure class="work w4"><div class="work-art">pulso</div><figcaption>Branding · App de fitness</figcaption></figure>
+      <figure class="work w5"><div class="work-art">Mar &amp; Sal</div><figcaption>Menú · Restaurante</figcaption></figure>
+      <figure class="work w6"><div class="work-art">◐ ◑</div><figcaption>Redes sociales · Estudio de yoga</figcaption></figure>
+    </div>
+  </section>
 
- <form onsubmit="addSession(event)">
-  <input type="date" id="date" required>
-  <select id="type">
-   <option>Poker</option>
-   <option>Casino</option>
-   <option>Trading</option>
-  </select>
-  <input type="number" id="buyin" placeholder="Buy-in" required>
-  <input type="number" id="cashout" placeholder="Cash-out" required>
-  <input type="number" id="hours" placeholder="Horas" step="0.01" required>
-  <button>Registrar sesión</button>
- </form>
+  <!-- TESTIMONIOS -->
+  <section class="section alt">
+    <div class="section-head">
+      <h2>Lo que dicen mis clientes</h2>
+    </div>
+    <div class="testimonials">
+      <blockquote>“Entendió perfectamente lo que buscábamos. Nuestro logo ahora se reconoce en todas partes.”<cite>— Laura, Café Lumbre</cite></blockquote>
+      <blockquote>“Las plantillas de Instagram nos ahorran horas cada semana y el feed se ve increíble.”<cite>— Marcos, Pulso Fitness</cite></blockquote>
+      <blockquote>“Profesional, rápida y con un gusto impecable. Repetiremos seguro.”<cite>— Inés, Verde Cosmetics</cite></blockquote>
+    </div>
+  </section>
 
- <div id="sessionLog"></div>
-</div>
+  <!-- SOBRE MÍ -->
+  <section class="section about" id="sobre-mi">
+    <div class="about-photo" aria-hidden="true"><span>Á</span></div>
+    <div>
+      <h2>Hola, soy Ángeles</h2>
+      <p>Soy diseñadora gráfica especializada en branding e ilustración. Ayudo a emprendedores y pequeñas empresas a construir marcas con personalidad, coherentes y fáciles de recordar.</p>
+      <p>Trabajo con Adobe Illustrator, Photoshop, InDesign y Figma, y entrego siempre archivos listos para imprimir y para web.</p>
+      <ul class="tags">
+        <li>Branding</li><li>Logotipos</li><li>Ilustración</li><li>Packaging</li><li>Social media</li><li>Editorial</li>
+      </ul>
+    </div>
+  </section>
 
-<!-- CHART -->
-<div class="section hidden" id="chart">
- <canvas id="lineChart"></canvas>
-</div>
+  <!-- CONTACTO -->
+  <section class="section alt" id="contacto">
+    <div class="section-head">
+      <h2>¿Tienes un proyecto en mente?</h2>
+      <p>Cuéntamelo y te envío un presupuesto personalizado en menos de 48 h.</p>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <input type="text" name="nombre" placeholder="Tu nombre" required />
+      <input type="email" name="email" placeholder="Tu email" required />
+      <select name="servicio">
+        <option>Logotipo</option>
+        <option>Identidad de marca</option>
+        <option>Redes sociales</option>
+        <option>Packaging</option>
+        <option>Otro</option>
+      </select>
+      <textarea name="mensaje" rows="4" placeholder="Cuéntame sobre tu proyecto" required></textarea>
+      <button class="btn btn-primary" type="submit">Enviar mensaje</button>
+      <p class="form-msg" id="formMsg" role="status"></p>
+    </form>
+  </section>
 
-<script>
-let data = JSON.parse(localStorage.getItem("tracker")) || {
- sessions:[],
- balance:[0],
- assets:{cash:0,crypto:0,stocks:0}
-};
+  <footer class="site-footer">
+    <div>
+      <a href="#" class="logo">ángeles<span>.studio</span></a>
+      <p>Diseño gráfico con intención.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#tienda">Tienda</a>
+      <a href="#portafolio">Portafolio</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://behance.net" target="_blank" rel="noopener">Behance</a>
+    </div>
+    <p class="copy">© <span id="year"></span> Ángeles Studio. Todos los derechos reservados.</p>
+  </footer>
 
-function openTab(id){
- document.querySelectorAll(".section").forEach(s=>s.classList.add("hidden"));
- document.getElementById(id).classList.remove("hidden");
- document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
- event.target.classList.add("active");
-}
+  <!-- CARRITO -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart" id="cart" aria-label="Carrito">
+    <div class="cart-head">
+      <h3>Tu carrito</h3>
+      <button id="closeCart" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><b id="cartTotal">0 €</b></div>
+      <button class="btn btn-primary full" id="checkout">Finalizar compra</button>
+    </div>
+  </aside>
 
-/* TIMER */
-let seconds=0, timer=null;
+  <div class="toast" id="toast" role="status"></div>
 
-function startTimer(){
- if(timer) return;
- timer=setInterval(()=>{
-  seconds++;
-  let h=String(Math.floor(seconds/3600)).padStart(2,'0');
-  let m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
-  let s=String(seconds%60).padStart(2,'0');
-  time.textContent=`${h}:${m}:${s}`;
- },1000);
-}
-
-function stopTimer(){
- clearInterval(timer);
- timer=null;
- hours.value=(seconds/3600).toFixed(2);
-}
-
-/* SESSION */
-function addSession(e){
- e.preventDefault();
- let buy=+buyin.value;
- let out=+cashout.value;
- let profit=out-buy;
- let hrs=+hours.value;
- let roi=((profit/buy)*100).toFixed(1);
- let hourly=(profit/hrs).toFixed(0);
-
- data.sessions.push({date:date.value,type:type.value,buy,out,profit,hrs,roi,hourly});
- data.balance.push(data.balance.at(-1)+profit);
-
- localStorage.setItem("tracker",JSON.stringify(data));
- seconds=0; time.textContent="00:00:00";
- renderAll();
- e.target.reset();
-}
-
-function renderAll(){
- renderHome();
- renderSessions();
- drawChart();
-}
-
-function renderHome(){
- let profit=data.balance.at(-1);
- let invested=data.sessions.reduce((a,s)=>a+s.buy,0);
- totalCapital.textContent=`$${(invested+profit).toLocaleString()}`;
- totalProfit.textContent=`$${profit.toLocaleString()}`;
-}
-
-function renderSessions(){
- sessionLog.innerHTML="";
- data.sessions.slice().reverse().forEach(s=>{
-  sessionLog.innerHTML+=`
-  <div class="log-item">
-   <b>${s.date}</b> · ${s.type}<br>
-   Buy $${s.buy} → Out $${s.out}<br>
-   Profit: <span style="color:${s.profit>=0?'#00ff9d':'#ff4d4d'}">
-   ${s.profit>=0?'+':''}${s.profit}</span><br>
-   ${s.roi}% · $${s.hourly}/h
-  </div>`;
- });
-}
-
-let chart;
-function drawChart(){
- if(chart) chart.destroy();
- chart=new Chart(lineChart,{
-  type:'line',
-  data:{
-   labels:data.balance.map((_,i)=>i),
-   datasets:[{
-    data:data.balance,
-    borderColor:'#00ff9d',
-    fill:true,
-    backgroundColor:'rgba(0,255,157,.15)',
-    tension:.3
-   }]
-  },
-  options:{plugins:{legend:{display:false}}}
- });
-}
-
-renderAll();
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
